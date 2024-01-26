@@ -1,0 +1,20 @@
+These commands I ran to start kafka server and stream my Data by Producer & Consumer.
+
+commands for Kafka Server:
+	su -l kafka
+	cd ~/kafka
+	sudo systemctl start kafka
+	sudo systemctl status kafka
+	
+for Zookeeper:
+	sudo systemctl enable zookeeper
+	sudo systemctl enable kafka
+	
+for creating kafka topic:
+	~/kafka/bin/kafka-topics.sh --create --topic IBD-Projectt --bootstrap-server localhost:9092 --replication-factor 1 --partitions 4
+
+for Producer:
+	~/kafka/bin/kafka-console-producer.sh --topic IBD-Projectt --bootstrap-server localhost:9092
+	
+for Consumer:
+	~/kafka/bin/kafka-console-consumer.sh --topic IBD-Projectt --bootstrap-server localhost:9092

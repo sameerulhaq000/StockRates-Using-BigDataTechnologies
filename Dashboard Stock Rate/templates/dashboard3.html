@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>GSPTSE STOCK</title>
+        <style>
+            body {
+                text-align: center;
+                background-color: burlywood;
+                /* color: white; */
+            }
+            h2{
+                text-align: center; 
+                color: black;
+            }
+        </style>
+        <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    </head>
+<body style="background-color: #3498db;">
+    <h1>GSPTSE Stock Dashboard</h1>
+    <div id="open-chart"></div>
+    <h2>Open</h2>
+    <div id="high-chart"></div>
+    <h2>High</h2>
+    <div id="low-chart"></div>
+    <h2>Low</h2>
+    <div id="close-chart"></div>
+    <h2>Close</h2>
+    <div id="adj-close-chart"></div>
+    <h2>Adj Close</h2>
+    <div id="close-usd-chart"></div>
+    <h2>Close USD</h2>
+
+    <script>
+    // Assuming your data variable is properly defined
+    var data = {{ data.to_dict(orient="records") | tojson | safe }};
+    console.log(data);   
+
+    // Extract specific columns for the charts
+    var dates = data.map(function(row) { return row.Date; });
+    var openValues = data.map(function(row) { return row.Open; });
+    var highValues = data.map(function(row) { return row.High; });
+    var lowValues = data.map(function(row) { return row.Low; });
+    var closeValues = data.map(function(row) { return row.Close; });
+    var adjCloseValues = data.map(function(row) { return row['Adj Close']; });
+    var closeUSDValues = data.map(function(row) { return row.CloseUSD; });
+
+    //Function to create bar chart
+    function createBarChart(chartId, xValues, yValues, chartTitle) {
+            var chart = [{
+                x: xValues,
+                y: yValues,
+                type: 'bar',
+                name: chartTitle,
+                marker: {
+                    color: 'red', 
+                },
+            }];
+
+            Plotly.newPlot(chartId, chart);
+    }
+
+    // Create bar charts using the function
+    createBarChart('open-chart', dates, openValues, 'Open Column');
+    createBarChart('high-chart', dates, highValues, 'High Column');
+    createBarChart('low-chart', dates, lowValues, 'Low Column');
+    createBarChart('close-chart', dates, closeValues, 'Close Column');
+    createBarChart('adj-close-chart', dates, adjCloseValues, 'Adj Close Column');
+    createBarChart('close-usd-chart', dates, closeUSDValues, 'CloseUSD Column');
+     </script>
+</body>
+</html>

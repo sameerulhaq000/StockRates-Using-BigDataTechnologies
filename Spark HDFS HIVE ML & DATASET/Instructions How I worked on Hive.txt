@@ -1,0 +1,23 @@
+Instructions:
+First I opened terminal from my localhost:8888 then I write the below code to create table and columns in Hive.
+
+(base) root@root:~# Hive (press enter)
+
+now I am in Hive
+
+hive> CREATE TABLE IF NOT EXISTS StockMarket(
+	> index string,
+	> daate date,
+	> open double, 
+	> high double,
+	> low double, 
+	> cloose double,
+	> adjcloose double,
+	> closeusd double)
+	> COMMENT 'StockData'
+	> ROW FORMAT DELIMITED
+	> FIELDS TERMINATED BY ',';
+
+Now after creating table and relevent columns according to my dataset I loaded my indexProcessed.csv (DATASET) file into Hive table by using below code,
+
+hive> LOAD DATA INPATH '/tmp/spark/indexProcessed.csv' INTO TABLE StockMarket;
